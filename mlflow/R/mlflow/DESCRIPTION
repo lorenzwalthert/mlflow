@@ -47,6 +47,7 @@ Imports:
     tibble (>= 2.0.0),
     withr,
     xml2,
+    xgboost,
     yaml,
     zeallot
 Suggests: 
