@@ -24,7 +24,7 @@ mlflow_save_model.xgb.Booster <- function(model,
     basename(conda_env)
   } else { # create default conda environment
     conda_deps <- list()
-    pip_deps <- list("mlflow", paste("xgboost>=", version, sep = ""))
+    pip_deps <- list("mlflow>=1.5.0", paste("xgboost>=", version, sep = ""))
     create_conda_env(name = "conda_env",
                      path = file.path(path, "conda_env.yaml"),
                      conda_deps = conda_deps,
