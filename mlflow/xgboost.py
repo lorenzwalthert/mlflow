@@ -19,7 +19,8 @@ from __future__ import absolute_import
 
 import os
 import yaml
-
+import xgboost as xgb
+    
 import mlflow
 from mlflow import pyfunc
 from mlflow.models import Model
@@ -139,7 +140,6 @@ def log_model(xgb_model, artifact_path, conda_env=None, registered_model_name=No
 
 
 def _load_model(path):
-    import xgboost as xgb
     model = xgb.Booster()
     model.load_model(os.path.abspath(path))
     return model
