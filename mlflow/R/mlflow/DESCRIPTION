@@ -48,3 +48,4 @@ Suggests:
   lintr,
   testthat,
   stringi (< 1.4.4)
+RoxygenNote: 7.0.2
