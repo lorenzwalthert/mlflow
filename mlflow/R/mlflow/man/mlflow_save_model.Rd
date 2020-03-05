@@ -12,7 +12,7 @@
 
 \method{mlflow_save_model}{keras.engine.training.Model}(model, path, model_spec = list(), conda_env = NULL, ...)
 
-\method{mlflow_save_model}{xgb.Booster}(model, path, conda_env = NULL, ...)
+\method{mlflow_save_model}{xgb.Booster}(model, path, model_spec = list(), conda_env = NULL, ...)
 
 mlflow_save_model(model, path, model_spec = list(), ...)
 }
