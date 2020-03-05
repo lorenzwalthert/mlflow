@@ -35,7 +35,7 @@ test_that("mlflow can save model", {
   write.csv(test$data, temp_in_csv, row.names = FALSE)
   mlflow_cli(
     "models", "predict", "-m", "model", "-i", temp_in_csv,
-    "-o", temp_out, "-t", "csv", "--no-conda"
+    "-o", temp_out, "-t", "csv"
   )
   prediction <- unlist(jsonlite::read_json(temp_out))
   expect_true(!is.null(prediction))
@@ -48,7 +48,7 @@ test_that("mlflow can save model", {
   mlflow_cli(
     "models", "predict", "-m", "model", "-i", temp_in_json, "-o", temp_out,
     "-t", "json",
-    "--json-format", "records", "--no-conda"
+    "--json-format", "records"
   )
   prediction <- unlist(jsonlite::read_json(temp_out))
   expect_true(!is.null(prediction))
@@ -65,7 +65,7 @@ test_that("mlflow can save model", {
   mlflow_cli(
     "models", "predict", "-m", "model", "-i", temp_in_json_split,
     "-o", temp_out, "-t",
-    "json", "--json-format", "split", "--no-conda"
+    "json", "--json-format", "split"
   )
   prediction <- unlist(jsonlite::read_json(temp_out))
   expect_true(!is.null(prediction))
