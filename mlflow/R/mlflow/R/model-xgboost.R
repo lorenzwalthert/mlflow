@@ -1,9 +1,10 @@
 #' @rdname mlflow_save_model
 #' @export
 mlflow_save_model.xgb.Booster <- function(model,
-                                                          path,
-                                                          conda_env = NULL,
-                                                          ...) {
+                                          path,
+                                          model_spec = list(),
+                                          conda_env = NULL,
+                                          ...) {
   if (dir.exists(path)) unlink(path, recursive = TRUE)
   dir.create(path)
 
@@ -25,10 +26,12 @@ mlflow_save_model.xgb.Booster <- function(model,
   } else { # create default conda environment
     conda_deps <- list()
     pip_deps <- list("mlflow", paste("xgboost>=", version, sep = ""))
-    create_conda_env(name = "conda_env",
-                     path = file.path(path, "conda_env.yaml"),
-                     conda_deps = conda_deps,
-                     pip_deps = pip_deps)
+    create_conda_env(
+      name = "conda_env",
+      path = file.path(path, "conda_env.yaml"),
+      conda_deps = conda_deps,
+      pip_deps = pip_deps
+    )
     "conda_env.yaml"
   }
 
@@ -36,17 +39,16 @@ mlflow_save_model.xgb.Booster <- function(model,
     xgboost = list(
       xgb_version = version,
       data = model_data_subpath
-      )
+    )
   )
 
   pyfunc_conf <- create_pyfunc_conf(
     loader_module = "mlflow.xgboost",
     data = model_data_subpath,
-    env = conda_env)
-
-  mlflow_write_model_spec(path, list(
-    flavors = append(xgboost_conf, pyfunc_conf)
-  ))
+    env = conda_env
+  )
+  model_spec$flavors <- append(append(model_spec$flavors, xgboost_conf), pyfunc_conf)
+  mlflow_write_model_spec(path, model_spec)
 }
 
 #' @export
