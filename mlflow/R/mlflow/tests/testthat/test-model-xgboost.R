@@ -27,50 +27,50 @@ test_that("mlflow can save model", {
     predict(model, xgboost::xgb.DMatrix(as.matrix(test$data)))
   )
 
-  # # Test that we can score this model with pyfunc backend
-  temp_in_csv <- tempfile(fileext = ".csv")
-  temp_in_json <- tempfile(fileext = ".json")
-  temp_in_json_split <- tempfile(fileext = ".json")
-  temp_out <- tempfile(fileext = ".json")
-  write.csv(test$data, temp_in_csv, row.names = FALSE)
-  mlflow_cli(
-    "models", "predict", "-m", "model", "-i", temp_in_csv,
-    "-o", temp_out, "-t", "csv"
-  )
-  prediction <- unlist(jsonlite::read_json(temp_out))
-  expect_true(!is.null(prediction))
-  expect_equal(
-    prediction,
-    predict(model, xgboost::xgb.DMatrix(as.matrix(test$data)))
-  )
-  # json records
-  jsonlite::write_json(test$data, temp_in_json)
-  mlflow_cli(
-    "models", "predict", "-m", "model", "-i", temp_in_json, "-o", temp_out,
-    "-t", "json",
-    "--json-format", "records"
-  )
-  prediction <- unlist(jsonlite::read_json(temp_out))
-  expect_true(!is.null(prediction))
-  expect_equal(
-    prediction,
-    unname(predict(model, as.matrix(test$data)))
-  )
-  # json split
-  mtcars_split <- list(
-    columns = names(test$data), index = row.names(test$data),
-    data = as.matrix(test$data)
-  )
-  jsonlite::write_json(mtcars_split, temp_in_json_split)
-  mlflow_cli(
-    "models", "predict", "-m", "model", "-i", temp_in_json_split,
-    "-o", temp_out, "-t",
-    "json", "--json-format", "split"
-  )
-  prediction <- unlist(jsonlite::read_json(temp_out))
-  expect_true(!is.null(prediction))
-  expect_equal(
-    prediction,
-    unname(predict(model, as.matrix(test$data)))
-  )
+  # # # Test that we can score this model with pyfunc backend
+  # temp_in_csv <- tempfile(fileext = ".csv")
+  # temp_in_json <- tempfile(fileext = ".json")
+  # temp_in_json_split <- tempfile(fileext = ".json")
+  # temp_out <- tempfile(fileext = ".json")
+  # write.csv(test$data, temp_in_csv, row.names = FALSE)
+  # mlflow_cli(
+  #   "models", "predict", "-m", "model", "-i", temp_in_csv,
+  #   "-o", temp_out, "-t", "csv"
+  # )
+  # prediction <- unlist(jsonlite::read_json(temp_out))
+  # expect_true(!is.null(prediction))
+  # expect_equal(
+  #   prediction,
+  #   predict(model, xgboost::xgb.DMatrix(as.matrix(test$data)))
+  # )
+  # # json records
+  # jsonlite::write_json(test$data, temp_in_json)
+  # mlflow_cli(
+  #   "models", "predict", "-m", "model", "-i", temp_in_json, "-o", temp_out,
+  #   "-t", "json",
+  #   "--json-format", "records"
+  # )
+  # prediction <- unlist(jsonlite::read_json(temp_out))
+  # expect_true(!is.null(prediction))
+  # expect_equal(
+  #   prediction,
+  #   unname(predict(model, as.matrix(test$data)))
+  # )
+  # # json split
+  # mtcars_split <- list(
+  #   columns = names(test$data), index = row.names(test$data),
+  #   data = as.matrix(test$data)
+  # )
+  # jsonlite::write_json(mtcars_split, temp_in_json_split)
+  # mlflow_cli(
+  #   "models", "predict", "-m", "model", "-i", temp_in_json_split,
+  #   "-o", temp_out, "-t",
+  #   "json", "--json-format", "split"
+  # )
+  # prediction <- unlist(jsonlite::read_json(temp_out))
+  # expect_true(!is.null(prediction))
+  # expect_equal(
+  #   prediction,
+  #   unname(predict(model, as.matrix(test$data)))
+  # )
 })
