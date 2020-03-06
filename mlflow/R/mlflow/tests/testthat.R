@@ -7,5 +7,7 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   message("Current working directory: ", getwd())
   mlflow_home <- Sys.getenv("MLFLOW_HOME", "../../../../.")
   conda_install(c(mlflow_home), envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)
+  # needed for test that uses mlflow cli
+  conda_install("xgboost", envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)
   test_check("mlflow")
 }
