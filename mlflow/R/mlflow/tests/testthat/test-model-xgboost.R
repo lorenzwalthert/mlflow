@@ -92,9 +92,9 @@ test_that("can load and predict with python pyfunct and xgboost backend", {
     unname(predict(model, as.matrix(test$data)))
   )
 
-  mlflow.xgboost <- reticulate::import("mlflow.xgboost")
+  mlflow.xgboost <- import("mlflow.xgboost")
   xgboost_native_model <- mlflow.xgboost$load_model("model")
-  xgboost <- reticulate::import("xgboost")
+  xgboost <- import("xgboost")
 
   expect_equivalent(
     xgboost_native_model$predict(xgboost$DMatrix(test$data)),
