@@ -85,7 +85,7 @@ test_that("Can predict with cli backend", {
 })
 
 test_that("can load and predict with python pyfunct and xgboost backend", {
-  reticulate::use_condaenv(condaenv = "r-mlflow")
+  reticulate::use_condaenv(condaenv = mlflow_conda_env_name())
   pyfunc <- reticulate::import("mlflow.pyfunc")
   py_model <- pyfunc$load_model("model")
   expect_equal(
