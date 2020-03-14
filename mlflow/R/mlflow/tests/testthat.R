@@ -4,7 +4,6 @@ library(reticulate)
 
 if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   mlflow:::mlflow_maybe_create_conda_env(python_version = "3.6")
-  use_condaenv(mlflow:::mlflow_conda_env_name())
   message("Current working directory: ", getwd())
   mlflow_home <- Sys.getenv("MLFLOW_HOME", "../../../../.")
   conda_install(c(mlflow_home), envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)
