@@ -9,5 +9,6 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   conda_install(c(mlflow_home), envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)
   # needed for test that uses mlflow cli
   conda_install("xgboost", envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)
+  use_condaenv(mlflow:::mlflow_conda_env_name())
   test_check("mlflow")
 }
