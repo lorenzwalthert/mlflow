@@ -6,5 +6,6 @@ install.packages("roxygen2")
 library(keras)
 # pinning tensorflow version to 1.14 until test_keras_model.R is fixed
 install_keras(method = "conda", tensorflow="1.14.0")
+reticulate::conda_install("r-mlflow", "xgboost")
 devtools::check_built(path = package, error_on = "note", args = "--no-tests")
 source("testthat.R")
