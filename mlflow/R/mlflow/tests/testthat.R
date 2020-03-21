@@ -7,5 +7,6 @@ if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   # needed for test that uses mlflow cli
   conda_install("xgboost", envname = mlflow:::mlflow_conda_env_name())
   use_condaenv(mlflow:::mlflow_conda_env_name())
-  test_check("mlflow")
+  pyfunc <- import("mlflow.pyfunc")
+  # test_check("mlflow")
 }
