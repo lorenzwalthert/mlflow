@@ -24,13 +24,13 @@ matrix:
       install:
         - source ./travis/install-common-deps.sh
         # # pinning tensorflow version to 1.14 until test_keras_model.R is fixed
-        - R -e 'install.packages("keras", repos="http://cran.rstudio.com/"); keras::install_keras(method = "conda", tensorflow="1.14.0")'
       script:
         - cd mlflow/R/mlflow
         # Building the package here populates the /home/travis/R/Library cache,
         # and is also used when python forks into R (e.g., rfunc via models CLI).
         - R CMD build .
         - R -e 'files <- dir(); package <- files[grepl("mlflow_", files)]; install.packages(package)'
+        - R -e 'install.packages("keras", repos= "http://cran.rstudio.com/"); reticulate::use_condaenv(mlflow:::mlflow_conda_env_name()); keras::install_keras(method = "conda", tensorflow="1.14.0")'
         - R -e 'mlflow:::mlflow_maybe_create_conda_env(python_version = "3.6")'
         - R -e 'reticulate::conda_install(Sys.getenv("MLFLOW_HOME", "../../../."), envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)'
         - export LINTR_COMMENT_BOT=false
