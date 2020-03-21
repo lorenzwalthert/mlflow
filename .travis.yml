@@ -35,6 +35,8 @@ matrix:
         - cd ../../..
       install:
         - source ./travis/install-common-deps.sh
+        # # pinning tensorflow version to 1.14 until test_keras_model.R is fixed
+        - R -e 'install.packages("keras", repos="http://cran.rstudio.com/"); keras::install_keras(method = "conda", tensorflow="1.14.0")'
       script:
         - cd mlflow/R/mlflow
         # Building the package here populates the /home/travis/R/Library cache,
