@@ -19,3 +19,5 @@ source("testthat.R")
 
 # seems we cannot use the same session because python versions are different
 # evident with reticulate::use_conda_env(..., required = TRUE)
+
+# maybe use envname ... in install_keras() to install to mlflow env.

@@ -42,9 +42,9 @@ matrix:
         # and is also used when python forks into R (e.g., rfunc via models CLI).
         - R CMD build .
         - R -e 'files <- dir(); package <- files[grepl("mlflow_", files)]; install.packages(package)'
-        - R -e 'install.packages("keras", repos= "http://cran.rstudio.com/"); keras::install_keras(method = "conda", tensorflow="1.14.0")'
         - R -e 'mlflow:::mlflow_maybe_create_conda_env(python_version = "3.6")'
         - R -e 'reticulate::conda_install(Sys.getenv("MLFLOW_HOME", "../../../."), envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)'
+        - R -e 'install.packages("keras", repos= "http://cran.rstudio.com/"); keras::install_keras(method = "conda", tensorflow="1.14.0", envname =  mlflow:::mlflow_conda_env_name())'
         - export LINTR_COMMENT_BOT=false
         - cd tests
         - Rscript ../.travis.R
