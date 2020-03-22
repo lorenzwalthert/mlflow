@@ -13,3 +13,9 @@ source("testthat.R")
 
 # required: move keras installation out of test session because otherwise
 # python envs are messed up.
+
+# could make either keras or xgboost test work, not both. Because activated
+# environment cannot be changed.
+
+# seems we cannot use the same session because python versions are different
+# evident with reticulate::use_conda_env(..., required = TRUE)
