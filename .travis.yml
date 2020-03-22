@@ -43,7 +43,8 @@ matrix:
         - R CMD build .
         - R -e 'files <- dir(); package <- files[grepl("mlflow_", files)]; install.packages(package)'
         - R -e 'mlflow:::mlflow_maybe_create_conda_env(python_version = "3.6")'
-        - R -e 'reticulate::conda_install(c("xgboost", "libgcc"), envname = mlflow:::mlflow_conda_env_name(), python_version = "3.6")'
+        - R -e 'reticulate::conda_install("xgboost", envname = mlflow:::mlflow_conda_env_name(), python_version = "3.6")'
+        - R -e 'reticulate::conda_install("libgcc", envname = mlflow:::mlflow_conda_env_name(), python_version = "3.6")'
         - R -e 'reticulate::conda_install(Sys.getenv("MLFLOW_HOME", "../../../."), envname = mlflow:::mlflow_conda_env_name(), pip = TRUE)'
         # - R -e 'install.packages("keras", repos= "http://cran.rstudio.com/"); keras::install_keras(method = "conda", tensorflow="1.14.0", envname =  mlflow:::mlflow_conda_env_name())'
         - export LINTR_COMMENT_BOT=false
