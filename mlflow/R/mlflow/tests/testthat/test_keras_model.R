@@ -1,4 +1,5 @@
 context("Model")
+use_condaenv('r-reticulate', required = TRUE)
 
 library("keras")
 
