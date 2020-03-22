@@ -85,6 +85,7 @@ test_that("Can predict with cli backend", {
 })
 
 test_that("can load and predict with python pyfunct and xgboost backend", {
+  pyfunc <- import("mlflow.pyfunc")
   py_model <- pyfunc$load_model("model")
   expect_equal(
     py_model$predict(test$data),
