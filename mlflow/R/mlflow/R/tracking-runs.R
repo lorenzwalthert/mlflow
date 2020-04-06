@@ -483,6 +483,7 @@ mlflow_log_artifact <- function(path, artifact_path = NULL, run_id = NULL, clien
              artifact_path,
              "--run-id",
              run_id,
+             stderr_callback = function(x, p) NULL,
              client = client
   )
 
