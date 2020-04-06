@@ -67,7 +67,7 @@ mlflow_run <- function(uri = ".", entry_point = NULL, version = NULL, parameters
     c(param_list)
 
   args <- if (!no_conda) args else c(args, "--no-conda")
-  result <- do.call(mlflow_cli, c("run", args))
+  result <- do.call(mlflow_cli, c("run", args, stderr_callback = function(x, p) NULL))
   matches <- regexec(".*Run \\(ID \\'([^\\']+).*", result$stderr)
   run_id <- regmatches(result$stderr, matches)[[1]][[2]]
   invisible(run_id)
