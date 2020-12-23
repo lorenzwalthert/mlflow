@@ -4,9 +4,12 @@
 #'   the terminal or through the MLflow CLI.
 #'
 #' @param uri Path to an R script, can be a quoted or unquoted string.
+#' @param transformer A function that transforms the input parameters. In
+#'   particular, functions that perform string substitutions are useful, e.g.
+#'   one that transforms "{{ today }}" into todays date.
 #' @keywords internal
 #' @export
-mlflow_source <- function(uri) {
+mlflow_source <- function(uri, transformer = identity) {
   if (interactive()) stop(
     "`mlflow_source()` cannot be used interactively; use `mlflow_run()` instead.",
     call. = FALSE
@@ -19,7 +22,14 @@ mlflow_source <- function(uri) {
 
   if (!is.null(command_args)) {
     purrr::iwalk(command_args, function(value, key) {
-      .globals$run_params[[key]] <- value
+      t <- transformer(value)
+      if (length(t) > 1) {
+        stop(paste(
+          "Transfromer must transform ", value, ' into an object of length ',
+          "one. Instead, the result was: ", as.character(t)
+        ))
+      }
+      .globals$run_params[[key]] <- t
     })
   }
 
