@@ -100,7 +100,14 @@ parse_command_line <- function(arguments) {
     key <- gsub("-", "_", key)
 
     # update our map of argument values
-    values[[key]] <- yaml::yaml.load(val)
+    values[[key]] <- tryCatch(
+      # needed to convert type numeric "3" to 3.
+      yaml::yaml.load(val), 
+      error = function(e) {
+        # if fails, it's a string.
+        val
+      }
+    )
   }
 
   values
